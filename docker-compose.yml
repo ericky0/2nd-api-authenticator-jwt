@@ -2,13 +2,13 @@ version: '3'
 
 services:
   teste-postgres-compose:
-    image: postgres
+    image: postgres:alpine
     environment:
-      POSTGRES_PASSWORD: "erick"
+      POSTGRES_PASSWORD: 'erick'
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data_container:/data/db
 
-volumes: 
+volumes:
   postgres_data_container:
