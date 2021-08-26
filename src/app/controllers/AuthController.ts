@@ -1,25 +1,26 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../models/User';
+import UserRepository from '../repositories/UserRepository';
 
 
 class AuthController {
     async authenticate(req: Request, res: Response) {
-        const repository = getRepository(User);
+
+        const repository = getCustomRepository(UserRepository);
         const { email, password } = req.body;
 
         const user = await repository.findOne({ where: { email }});
 
         if (!user) {
-            return res.sendStatus(401);
+            return res.status(401).json({error: "E-mail not found"});
         }
 
         const isValidPassword = await bcrypt.compare(password, user.password);
 
         if(!isValidPassword){
-            return res.sendStatus(401);
+            return res.status(401).json({error: "Incorrect password"});
         }
 
         const token = jwt.sign({ id: user.id }, 'secret message', {expiresIn: '1d'});
