@@ -10,6 +10,4 @@ app.use(cors());
 app.use(express.json());
 app.use(router);
 
-
-
 app.listen(3000, () => console.log('🔥 server started at http://localhost:3000'));
