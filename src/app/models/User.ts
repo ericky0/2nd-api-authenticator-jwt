@@ -6,6 +6,7 @@ import {
   BeforeUpdate,
   CreateDateColumn,
   OneToMany,
+  Unique,
 } from 'typeorm';
 import bcrypt from 'bcryptjs';
 import Document from './Document';
@@ -18,7 +19,7 @@ class User {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
