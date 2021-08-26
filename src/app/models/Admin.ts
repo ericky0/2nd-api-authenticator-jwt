@@ -5,18 +5,13 @@ import {
   BeforeInsert,
   BeforeUpdate,
   CreateDateColumn,
-  OneToMany,
 } from 'typeorm';
 import bcrypt from 'bcryptjs';
-import Document from './Document';
 
-@Entity('users')
-class User {
+@Entity('admins')
+class Admin {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column()
-  name: string;
 
   @Column()
   email: string;
@@ -24,11 +19,8 @@ class User {
   @Column()
   password: string;
 
-  @Column({ default: 'user' })
+  @Column({ default: 'admin' })
   role: string;
-
-  @OneToMany(() => Document, (document) => document.user)
-  documents: Document[];
 
   @CreateDateColumn()
   created_at: Date;
@@ -40,4 +32,4 @@ class User {
   }
 }
 
-export default User;
+export default Admin;

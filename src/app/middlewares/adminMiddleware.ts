@@ -3,11 +3,12 @@ import jwt from 'jsonwebtoken';
 
 interface TokenPayLoad {
   id: string;
+  role: string;
   iat: number;
   exp: number;
 }
 
-export default function authMiddleware(
+export default function adminMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
@@ -21,9 +22,12 @@ export default function authMiddleware(
 
   try {
     const data = jwt.verify(token, 'secret message');
-    console.log(data);
-    const { id } = data as TokenPayLoad;
+    const { id, role } = data as TokenPayLoad;
     req.userId = id;
+
+    if (!role || role !== 'admin') {
+      return res.sendStatus(401);
+    }
 
     return next();
   } catch {
