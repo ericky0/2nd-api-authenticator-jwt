@@ -28,7 +28,7 @@ class AuthController {
     delete user.password;
 
     return res.json({
-      isAdmin: user.role === 'admin' ? true : false,
+      isAdmin: user.role === 'admin',
       token,
     });
   }
