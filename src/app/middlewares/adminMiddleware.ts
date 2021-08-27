@@ -19,14 +19,14 @@ export default function adminMiddleware(
   }
 
   const token = authorization.replace('Bearer', '').trim();
-
   try {
     const data = jwt.verify(token, 'secret message');
+    console.log(data);
     const { id, role } = data as TokenPayLoad;
     req.userId = id;
-
-    if (!role || role !== 'admin') {
-      return res.sendStatus(401);
+    
+    if(role !== 'admin'){
+        return res.sendStatus(401);
     }
 
     return next();

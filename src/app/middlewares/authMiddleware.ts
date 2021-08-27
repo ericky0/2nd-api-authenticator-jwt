@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 
 interface TokenPayLoad {
   id: string;
+  role: string;
   iat: number;
   exp: number;
 }
@@ -18,7 +19,6 @@ export default function authMiddleware(
   }
 
   const token = authorization.replace('Bearer', '').trim();
-
   try {
     const data = jwt.verify(token, 'secret message');
     console.log(data);

@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import UserRepository from '../repositories/UserRepository';
 
 class AuthController {
-  static async authenticate(req: Request, res: Response) {
+  static async authenticateLogin(req: Request, res: Response) {
     const repository = getCustomRepository(UserRepository);
     const { email, password } = req.body;
 
@@ -28,7 +28,7 @@ class AuthController {
     delete user.password;
 
     return res.json({
-      user,
+      isAdmin: user.role === 'admin',
       token,
     });
   }
