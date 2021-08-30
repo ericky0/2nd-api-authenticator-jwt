@@ -4,16 +4,20 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   ManyToOne,
+  PrimaryColumn,
 } from 'typeorm';
 import User from './User';
 
 @Entity('documents')
 class Document {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryColumn()
+  key: string;
 
   @Column()
   url: string;
+
+  @Column()
+  size: Number;
 
   @Column()
   name: string;
