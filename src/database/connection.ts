@@ -1,4 +1,4 @@
-import { createConnection, getCustomRepository, getRepository } from 'typeorm';
+import { createConnection} from 'typeorm';
 
 
 createConnection().then((connection) => {
