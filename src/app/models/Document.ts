@@ -5,7 +5,14 @@ import {
   CreateDateColumn,
   ManyToOne,
   PrimaryColumn,
+  BeforeInsert,
+  AfterRemove,
 } from 'typeorm';
+
+import fs from 'fs';
+import path from 'path';
+import { promisify } from 'util';
+
 import User from './User';
 
 @Entity('documents')
@@ -30,6 +37,23 @@ class Document {
 
   @CreateDateColumn()
   created_at: Date;
+
+  @BeforeInsert()
+  setUrl() {
+    if (!this.url) {
+      this.url = `${process.env.APP_URL}/files/${this.key}`
+    }
+  };
+
+  @AfterRemove()
+  deleteLocalUpload() {
+    const pathUrl = path.resolve(__dirname, '..', '..', 'tmp', 'uploads', this.key);
+    console.log(pathUrl);
+    // return promisify(fs.unlink)(path.resolve(__dirname, '..', '..', '..', 'tmp', 'uploads', this.key))
+  }
 }
+
+
+
 
 export default Document;

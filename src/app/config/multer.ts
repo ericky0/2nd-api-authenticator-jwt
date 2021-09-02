@@ -2,13 +2,10 @@
 import multer from "multer";
 import path from "path";
 import crypto from "crypto";
-// import aws from "aws-sdk";
-// import multerS3 from ("multer-s3");
 
-export default module.exports = {
-    //pra onde vão esses arquivos pós-upload
-    dest: path.resolve(__dirname, '..', '..', 'tmp', 'uploads'),
-    storage: multer.diskStorage({
+
+const storageTypes = {
+    local:  multer.diskStorage({
         destination: (req, file, cb) => {
             cb(null, path.resolve(__dirname, '..', '..', '..', 'tmp', 'uploads'))
         },
@@ -25,7 +22,15 @@ export default module.exports = {
                 cb(null, fileName);
             }) 
         }
-    }),
+    })
+}
+
+
+
+export default module.exports = {
+    //pra onde vão esses arquivos pós-upload
+    dest: path.resolve(__dirname, '..', '..', 'tmp', 'uploads'),
+    storage: storageTypes['local'],
 
     //limites do arquivo
     limits: {
