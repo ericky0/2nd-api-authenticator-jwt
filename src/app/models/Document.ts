@@ -7,6 +7,7 @@ import {
   PrimaryColumn,
   BeforeInsert,
   AfterRemove,
+  BeforeRemove,
 } from 'typeorm';
 
 import fs from 'fs';
@@ -45,11 +46,11 @@ class Document {
     }
   };
 
-  @AfterRemove()
+  @BeforeRemove()
   deleteLocalUpload() {
     const pathUrl = path.resolve(__dirname, '..', '..', 'tmp', 'uploads', this.key);
     console.log(pathUrl);
-    // return promisify(fs.unlink)(path.resolve(__dirname, '..', '..', '..', 'tmp', 'uploads', this.key))
+    return promisify(fs.unlink)(path.resolve(__dirname, '..', '..', '..', 'tmp', 'uploads', this.key))
   }
 }
 
