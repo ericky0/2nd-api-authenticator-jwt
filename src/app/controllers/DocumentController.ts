@@ -8,7 +8,7 @@ class DocumentController {
 
     static async createDocument (req: Request, res: Response) {
         const {originalname: name, size, filename: key } = req.file;
-        const userReq = req.headers.user.toString();
+        const userReq = req.body.userId;
         const userRepository = getCustomRepository(UserRepository);
         const user = await userRepository.findOne(userReq);
         const repository = getCustomRepository(DocumentRepository);
@@ -30,11 +30,22 @@ class DocumentController {
         const repository = getCustomRepository(DocumentRepository);
         const id = req.params.id;
         const documents = await repository.find();
-        const updatedDocuments = documents.find(document => document.user.id === id);
+        const updatedDocuments = documents.filter(document => document.user.id === id);
         if(!updatedDocuments){
             return res.status(400).json({ message: 'document not found' })
           }
         res.json(updatedDocuments);
+    }
+
+    static async findUserDocument (req: Request, res: Response){
+        const repository = getCustomRepository(DocumentRepository);
+        const id = req.userId;
+        const documents = await repository.find();
+        const updatedDocuments = documents.filter(document => document.user.id === id);
+        if(!updatedDocuments){
+            return res.status(400).json({ message: 'document not found' })
+          }
+        res.json({documents: updatedDocuments});
     }
 
     static async listDocuments (req: Request, res: Response){
