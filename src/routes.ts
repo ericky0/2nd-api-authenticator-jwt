@@ -19,6 +19,7 @@ router.get('/finduser', UserController.find);
 router.get('/validate', authMiddleware, UserController.index);
 router.post('/upload', multer(multerConfig).single("file"), DocumentController.createDocument);
 router.get('/listupload', DocumentController.listDocuments);
+router.get('/finduploadbyid/:id', DocumentController.findDocumentsById);
 router.delete('/deleteupload/:id', async (req: Request, res: Response) => {
     const repository = getCustomRepository(DocumentRepository);
     const document = await repository.findOne(req.params.id);

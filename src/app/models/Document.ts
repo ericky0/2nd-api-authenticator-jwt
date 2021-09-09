@@ -33,7 +33,7 @@ class Document {
   @Column()
   description: string;
 
-  @ManyToOne(() => User, (user) => user.documents)
+  @ManyToOne(() => User, (user) => User, {eager: true})
   user: User;
 
   @CreateDateColumn()

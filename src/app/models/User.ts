@@ -28,7 +28,7 @@ class User {
   @Column({ default: 'user' })
   role: string;
 
-  @OneToMany(() => Document, (document) => document.user)
+  @OneToMany(() => Document, (document) => Document)
   documents: Document[];
 
   @CreateDateColumn()
